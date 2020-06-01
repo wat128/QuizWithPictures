@@ -1,8 +1,11 @@
 package com.wat128.quizwithpictures;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,5 +86,36 @@ public class MainActivity extends AppCompatActivity {
         answerBtn4.setText(quiz.get(3));
 
         quizArray.remove(randomNum);
+    }
+
+    public void checkAnswer(View view) {
+        Button answerBtn = findViewById(view.getId());
+        String btnText = answerBtn.getText().toString();
+
+        String alertTitle;
+        if(btnText.equals(rightAnswer)){
+            alertTitle = "正解！";
+            ++rightAnswerCount;
+        } else {
+            alertTitle = "不正解...";
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder((this));
+        builder.setTitle(alertTitle);
+        builder.setMessage("答え : " + rightAnswer);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(quizArray.isEmpty()){
+                    // 結果画面へ
+                } else {
+                    ++quizCount;
+                    showNextQuiz();
+                }
+            }
+        });
+        builder.setCancelable(false);
+        builder.show();
+
     }
 }
