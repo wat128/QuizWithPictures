@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,5 +55,33 @@ public class MainActivity extends AppCompatActivity {
 
             quizArray.add(tmpArray);
         }
+
+        showNextQuiz();
+    }
+
+    public void showNextQuiz() {
+        countLabel.setText("Q" + quizCount);
+
+        Random random = new Random();
+        int randomNum = random.nextInt(quizArray.size());
+
+        ArrayList<String> quiz = quizArray.get(randomNum);
+
+        questionImage.setImageResource(
+                getResources().getIdentifier(quiz.get(0), "drawable", getPackageName())
+        );
+
+        rightAnswer = quiz.get(1);
+
+        quiz.remove(0);
+
+        Collections.shuffle(quiz);
+
+        answerBtn1.setText(quiz.get(0));
+        answerBtn2.setText(quiz.get(1));
+        answerBtn3.setText(quiz.get(2));
+        answerBtn4.setText(quiz.get(3));
+
+        quizArray.remove(randomNum);
     }
 }
