@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(quizArray.isEmpty()){
-                    // 結果画面へ
+                    showResult();
                 } else {
                     ++quizCount;
                     showNextQuiz();
@@ -117,5 +117,24 @@ public class MainActivity extends AppCompatActivity {
         builder.setCancelable(false);
         builder.show();
 
+    }
+
+    public void showResult(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("結果");
+        builder.setMessage(rightAnswerCount + " / " + quizCount);
+        builder.setPositiveButton("もう一度", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                recreate();;
+            }
+        });
+        builder.setNegativeButton("終了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.show();
     }
 }
